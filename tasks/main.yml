@@ -1,2 +1,18 @@
 ---
-# tasks file for toolshed
+# Install and configure ToolShed tools to handle data backups
+
+
+- name: install ToolShed
+  ansible.builtin.git:
+    repo: "https://github.com/paulrentschler/toolshed.git"
+    dest: "{{ toolshed_install_dir }}"
+    version: "{{ toolshed_repo_branch }}"
+
+- name: create the scripts directory
+  ansible.builtin.file:
+    path: "{{ toolshed_scripts_dir }}"
+    state: directory
+    owner: "{{ devops_user|default(ansible_user) }}"
+    group: "{{ devops_group|default(adm) }}"
+    mode: 0775
+

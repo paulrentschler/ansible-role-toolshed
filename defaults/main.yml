@@ -1,2 +1,28 @@
 ---
-# defaults file for toolshed
+# defaults for ToolShed-related variables
+
+
+# Where to install ToolShed
+toolshed_install_dir: /opt/toolshed
+
+# Where the shell scripts to run the backups go
+toolshed_scripts_dir: "{{ toolshed_install_dir }}/scripts"
+
+# Which version (branch) of ToolShed to install
+toolshed_repo_branch: "master"
+
+
+
+##
+# Database backups
+##
+toolshed_backup_db: no
+
+
+
+
+##
+# Plone backups
+##
+toolshed_backup_plone: no
+
