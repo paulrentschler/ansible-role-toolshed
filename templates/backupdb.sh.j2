@@ -1,0 +1,62 @@
+#!/bin/bash
+
+#
+# {{ ansible_managed }}
+#
+{% set encrypt = toolshed_backup_db_encryption_key %}
+{% set owner = toolshed_backup_db_owner %}
+{% set group = toolshed_backup_db_group %}
+{% set user = toolshed_backup_db_user %}
+{% set password = toolshed_backup_db_password %}
+{% set include = toolshed_backup_db_include %}
+{% set exclude = toolshed_backup_db_exclude %}
+
+{% if encrypt %}
+  {% set extensions = 'bak' %}
+{% else %}
+  {% set extensions = 'gz' %}
+{% endif %}
+{% set pruning = no %}
+{% if toolshed_backup_db_daily > 0 %}
+  {% set backup_dir = '/daily' %}
+  {% set pruning = yes %}
+{% else %}
+  {% set backup_dir = '' %}
+  {% if toolshed_backup_db_limit > 0 %}
+    {% set pruning = yes %}
+  {% endif %}
+{% endif %}
+
+BACKUP_PATH={{ toolshed_backup_db_backup_dir }}
+
+# backup the plone files
+/usr/bin/python3 {{ toolshed_install_dir }}/toolshed/bucket.py \
+    $BACKUP_PATH{{ backup_dir }} \
+    {% if encrypt != '' %}--encryptkey {{ encrypt }} \{% endif %}
+    {% if owner != '' %}--owner {{ owner }} \{% endif %}
+    {% if group != '' %}--group {{ group }} \{% endif %}
+    {% if user != '' %}--user {{ user }} \{% endif %}
+    {% if password != '' %}--password {{ password }} \{% endif %}
+    {% if include != [] %}{% for _item in include %}--include {{ _item }} \{% endfor %}{% endif %}
+    {% if exclude != [] %}{% for _item in exclude %}--exclude {{ _item }} \{% endfor %}{% endif %}
+    --type {{ toolshed_backup_db_type }}
+
+{% if pruning|bool %}
+# prune the backup files
+{% if toolshed_backup_db_daily > 0 %}
+/usr/bin/python3 {{ toolshed_install_dir }}/toolshed/shears.py \
+    $BACKUP_PATH \
+    {{ extensions }} \
+    --daily {{ toolshed_backup_db_daily }} \
+    --weekly {{ toolshed_backup_db_weekly }} \
+    --monthly {{ toolshed_backup_db_monthly }} \
+    --yearly {{ toolshed_backup_db_yearly }}
+{% endif %}
+{% if toolshed_backup_db_limit > 0 %}
+/usr/bin/python3 {{ toolshed_install_dir }}/toolshed/shears.py \
+    $BACKUP_PATH \
+    {{ extensions }} \
+    --limit {{ toolshed_backup_db_limit }}
+{% endif %}
+{% endif %}
+

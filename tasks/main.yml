@@ -17,6 +17,10 @@
     mode: 0775
 
 
+- name: configure database backups
+  include_tasks: backup_db.yml
+  when: toolshed_backup_db|bool
+
 - name: configure Plone backups
   include_tasks: backup_plone.yml
   when: toolshed_backup_plone|bool

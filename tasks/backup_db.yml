@@ -1,0 +1,72 @@
+---
+# Configure database backups using Bucket from ToolShed
+
+
+- name: create the backup directory
+  ansible.builtin.file:
+    path: "{{ toolshed_backup_db_backup_dir }}"
+    state: directory
+    owner: "{{ toolshed_backup_db_owner|default(devops_user)|default(ansible_user) }}"
+    group: "{{ toolshed_backup_db_group|default(devops_group)|default(adm) }}"
+    mode: 0775
+  become: yes
+
+- name: create the daily backup directory
+  ansible.builtin.file:
+    path: "{{ toolshed_backup_db_backup_dir }}/daily"
+    state: directory
+    owner: "{{ toolshed_backup_db_owner|default(devops_user)|default(ansible_user) }}"
+    group: "{{ toolshed_backup_db_group|default(devops_group)|default(adm) }}"
+    mode: 0775
+  become: yes
+  when: toolshed_backup_db_daily > 0
+
+- name: create the weekly backup directory
+  ansible.builtin.file:
+    path: "{{ toolshed_backup_db_backup_dir }}/weekly"
+    state: directory
+    owner: "{{ toolshed_backup_db_owner|default(devops_user)|default(ansible_user) }}"
+    group: "{{ toolshed_backup_db_group|default(devops_group)|default(adm) }}"
+    mode: 0775
+  become: yes
+  when: toolshed_backup_db_weekly > 0
+
+- name: create the monthly backup directory
+  ansible.builtin.file:
+    path: "{{ toolshed_backup_db_backup_dir }}/monthly"
+    state: directory
+    owner: "{{ toolshed_backup_db_owner|default(devops_user)|default(ansible_user) }}"
+    group: "{{ toolshed_backup_db_group|default(devops_group)|default(adm) }}"
+    mode: 0775
+  become: yes
+  when: toolshed_backup_db_monthly > 0
+
+- name: create the yearly backup directory
+  ansible.builtin.file:
+    path: "{{ toolshed_backup_db_backup_dir }}/yearly"
+    state: directory
+    owner: "{{ toolshed_backup_db_owner|default(devops_user)|default(ansible_user) }}"
+    group: "{{ toolshed_backup_db_group|default(devops_group)|default(adm) }}"
+    mode: 0775
+  become: yes
+  when: toolshed_backup_db_yearly > 0
+
+
+- name: create the backup script
+  ansible.builtin.template:
+    src: backupdb.sh.j2
+    dest: "{{ toolshed_scripts_dir }}/{{ toolshed_backup_db_script }}.sh"
+    owner: "{{ devops_user|default(ansible_user) }}"
+    group: "{{ devops_group|default(adm) }}"
+    mode: 0775
+  become: yes
+
+- name: schedule the Cron task
+  ansible.builtin.template:
+    src: backupdb.cron.j2
+    dest: "/etc/cron.d/{{ toolshed_backup_db_script }}"
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+

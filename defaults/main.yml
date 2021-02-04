@@ -16,8 +16,63 @@ toolshed_repo_branch: "master"
 ##
 # Database backups
 ##
+
+# Backs up the database when "yes"
 toolshed_backup_db: no
 
+# Type of database being backed up
+#   mysql -- MySQL database (currently the only supported option)
+toolshed_backup_db_type: "mysql"
+
+# Database username
+toolshed_backup_db_user: ""
+
+# Database password
+toolshed_backup_db_password: ""
+
+# Databases/tables to include
+toolshed_backup_db_include: []
+
+# Databases/tables to exclude
+toolshed_backup_db_exclude: []
+
+
+# Name of the script that will run the backup (NO extension)
+toolshed_backup_db_script: "dbbackup"
+
+# Path to the directory that will hold the database backups
+toolshed_backup_db_backup_dir: /backup/database
+
+# Encryption key to encrypt the backups
+toolshed_backup_db_encryption_key: ""
+
+# Owner/group for the backup files
+toolshed_backup_db_owner: ""
+toolshed_backup_db_group: ""
+
+# When to run the backup (Cron settings)
+toolshed_backup_db_schedule_mailto: "root"
+toolshed_backup_db_schedule_hour: 5
+toolshed_backup_db_schedule_min: 0
+toolshed_backup_db_schedule_month: "*"
+toolshed_backup_db_schedule_day: "*"
+toolshed_backup_db_schedule_days: "*"
+toolshed_backup_db_schedule_user: "root"
+
+# Number and type of backup directories to use
+#   If all the values below are zero, unlimited timestamped backups will be
+#   made into a single directory.
+
+# Number of timestamped backups to keep in a single directory
+toolshed_backup_db_limit: 0
+
+# Number of timestamped backups to keep in daily, weekly, monthly, yearly directories
+#   Not all four need to be used (i.e., backups can be just daily and monthly)
+#   BUT daily MUST be non-zero as it is the starting point
+toolshed_backup_db_daily: 0
+toolshed_backup_db_weekly: 0
+toolshed_backup_db_monthly: 0
+toolshed_backup_db_yearly: 0
 
 
 
