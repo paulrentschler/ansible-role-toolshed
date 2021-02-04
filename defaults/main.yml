@@ -24,5 +24,51 @@ toolshed_backup_db: no
 ##
 # Plone backups
 ##
+
+# Backs up Plone files when "yes"
 toolshed_backup_plone: no
+
+# Name of the script that will run the backup (NO extension)
+toolshed_backup_plone_script: "plonebackup"
+
+# Path to the Plone zeocluster directory
+toolshed_backup_plone_install_dir: /opt/current-plone/zeocluster
+
+# Path to the directory that will hold the Plone backups
+toolshed_backup_plone_backup_dir: /backup/plone
+
+# Combine the data.fs and blob storage into a single file
+toolshed_backup_plone_combine_files: no
+
+# Owner/group for the backup files
+toolshed_backup_plone_owner: ""
+toolshed_backup_plone_group: ""
+
+# Pack the ZODB with X days of transactions remaining
+#   0 will disable the packing
+toolshed_backup_plone_pack_days: 0
+
+# When to run the backup (Cron settings)
+toolshed_backup_plone_schedule_mailto: "root"
+toolshed_backup_plone_schedule_hour: 5
+toolshed_backup_plone_schedule_min: 0
+toolshed_backup_plone_schedule_month: "*"
+toolshed_backup_plone_schedule_day: "*"
+toolshed_backup_plone_schedule_days: "*"
+toolshed_backup_plone_schedule_user: "root"
+
+# Number and type of backup directories to use
+#   If all the values below are zero, unlimited timestamped backups will be
+#   made into a single directory.
+
+# Number of timestamped backups to keep in a single directory
+toolshed_backup_plone_limit: 0
+
+# Number of timestamped backups to keep in daily, weekly, monthly, yearly directories
+#   Not all four need to be used (i.e., backups can be just daily and monthly)
+#   BUT daily MUST be non-zero as it is the starting point
+toolshed_backup_plone_daily: 0
+toolshed_backup_plone_weekly: 0
+toolshed_backup_plone_monthly: 0
+toolshed_backup_plone_yearly: 0
 

@@ -16,3 +16,7 @@
     group: "{{ devops_group|default(adm) }}"
     mode: 0775
 
+
+- name: configure Plone backups
+  include_tasks: backup_plone.yml
+  when: toolshed_backup_plone|bool

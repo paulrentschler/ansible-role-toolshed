@@ -1,0 +1,65 @@
+#!/bin/bash
+
+#
+# {{ ansible_managed }}
+#
+{% if toolshed_backup_plone_combine_files|bool %}
+  {% set backup_args = ' -c' %}
+  {% set extensions = 'gz' %}
+{% else %}
+  {% set backup_args = '' %}
+  {% set extensions = 'fs gz' %}
+{% endif %}
+{% if toolshed_backup_plone_owner != '' %}
+  {% set backup_args = backup_args + ' -o ' + toolshed_backup_plone_owner %}
+{% endif %}
+{% if toolshed_backup_plone_group != '' %}
+  {% set backup_args = backup_args + ' -g ' + toolshed_backup_plone_group %}
+{% endif %}
+
+{% set pruning = no %}
+{% if toolshed_backup_plone_daily > 0 %}
+  {% set backup_dir = '/daily' %}
+  {% set pruning = yes %}
+{% else %}
+  {% set backup_dir = '' %}
+  {% if toolshed_backup_plone_limit > 0 %}
+    {% set pruning = yes %}
+  {% endif %}
+{% endif %}
+
+BACKUP_PATH={{ toolshed_backup_plone_backup_dir }}
+
+# backup the plone files
+/usr/bin/python3 {{ toolshed_install_dir }}/toolshed/wheelbarrow.py \
+    $BACKUP_PATH{{ backup_dir }} \
+    {{ toolshed_backup_plone_install_dir }} \
+    {{ backup_args }}
+
+{% if pruning|bool %}
+# prune the backup files
+{% if toolshed_backup_plone_daily > 0 %}
+/usr/bin/python3 {{ toolshed_install_dir }}/toolshed/shears.py \
+    $BACKUP_PATH \
+    {{ extensions }} \
+    --daily {{ toolshed_backup_plone_daily }} \
+    --weekly {{ toolshed_backup_plone_weekly }} \
+    --monthly {{ toolshed_backup_plone_monthly }} \
+    --yearly {{ toolshed_backup_plone_yearly }}
+{% endif %}
+{% if toolshed_backup_plone_limit > 0 %}
+/usr/bin/python3 {{ toolshed_install_dir }}/toolshed/shears.py \
+    $BACKUP_PATH \
+    {{ extensions }} \
+    --limit {{ toolshed_backup_plone_limit }}
+{% endif %}
+{% endif %}
+
+{% if toolshed_backup_plone_pack_days > 0 %}
+# pack the Data.fs
+echo "Packing the Data.fs"
+sudo -u plone_daemon \
+    {{ toolshed_backup_plone_install_dir }}/bin/zeopack \
+    days={{ toolshed_backup_plone_pack_days }}
+{% endif %}
+
