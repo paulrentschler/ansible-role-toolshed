@@ -13,7 +13,7 @@
     path: "{{ toolshed_scripts_dir }}"
     state: directory
     owner: "{{ devops_user|default(ansible_user) }}"
-    group: "{{ devops_group|default(adm) }}"
+    group: "{{ devops_group|default('adm') }}"
     mode: 0775
 
 

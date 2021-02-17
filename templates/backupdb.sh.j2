@@ -19,26 +19,44 @@
 {% set pruning = no %}
 {% if toolshed_backup_db_daily > 0 %}
   {% set backup_dir = '/daily' %}
-  {% set pruning = yes %}
+  {% set pruning = 'yes' %}
 {% else %}
   {% set backup_dir = '' %}
   {% if toolshed_backup_db_limit > 0 %}
-    {% set pruning = yes %}
+    {% set pruning = 'yes' %}
   {% endif %}
 {% endif %}
 
 BACKUP_PATH={{ toolshed_backup_db_backup_dir }}
 
-# backup the plone files
+# backup the database
 /usr/bin/python3 {{ toolshed_install_dir }}/toolshed/bucket.py \
     $BACKUP_PATH{{ backup_dir }} \
-    {% if encrypt != '' %}--encryptkey {{ encrypt }} \{% endif %}
-    {% if owner != '' %}--owner {{ owner }} \{% endif %}
-    {% if group != '' %}--group {{ group }} \{% endif %}
-    {% if user != '' %}--user {{ user }} \{% endif %}
-    {% if password != '' %}--password {{ password }} \{% endif %}
-    {% if include != [] %}{% for _item in include %}--include {{ _item }} \{% endfor %}{% endif %}
-    {% if exclude != [] %}{% for _item in exclude %}--exclude {{ _item }} \{% endfor %}{% endif %}
+{% if encrypt != '' %}
+    --encryptkey {{ encrypt }} \
+{% endif %}
+{% if owner != '' %}
+    --owner {{ owner }} \
+{% endif %}
+{% if group != '' %}
+    --group {{ group }} \
+{% endif %}
+{% if user != '' %}
+    --user {{ user }} \
+{% endif %}
+{% if password != '' %}
+    --password {{ password }} \
+{% endif %}
+{% if include != [] %}
+{% for _item in include %}
+    --include {{ _item }} \
+{% endfor %}
+{% endif %}
+{% if exclude != [] %}
+{% for _item in exclude %}
+    --exclude {{ _item }} \
+{% endfor %}
+{% endif %}
     --type {{ toolshed_backup_db_type }}
 
 {% if pruning|bool %}

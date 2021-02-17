@@ -20,11 +20,11 @@
 {% set pruning = no %}
 {% if toolshed_backup_plone_daily > 0 %}
   {% set backup_dir = '/daily' %}
-  {% set pruning = yes %}
+  {% set pruning = 'yes' %}
 {% else %}
   {% set backup_dir = '' %}
   {% if toolshed_backup_plone_limit > 0 %}
-    {% set pruning = yes %}
+    {% set pruning = 'yes' %}
   {% endif %}
 {% endif %}
 
