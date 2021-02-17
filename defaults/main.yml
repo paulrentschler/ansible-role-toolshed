@@ -47,8 +47,8 @@ toolshed_backup_db_backup_dir: /backup/database
 toolshed_backup_db_encryption_key: ""
 
 # Owner/group for the backup files
-toolshed_backup_db_owner: ""
-toolshed_backup_db_group: ""
+toolshed_backup_db_owner: "{{ devops_user|default(ansible_user) }}"
+toolshed_backup_db_group: "{{ devops_group|default('adm') }}"
 
 # When to run the backup (Cron settings)
 toolshed_backup_db_schedule_mailto: "root"
@@ -96,8 +96,8 @@ toolshed_backup_plone_backup_dir: /backup/plone
 toolshed_backup_plone_combine_files: no
 
 # Owner/group for the backup files
-toolshed_backup_plone_owner: ""
-toolshed_backup_plone_group: ""
+toolshed_backup_plone_owner: "{{ devops_user|default(ansible_user) }}"
+toolshed_backup_plone_group: "{{ devops_group|default('adm') }}"
 
 # Pack the ZODB with X days of transactions remaining
 #   0 will disable the packing

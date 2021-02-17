@@ -6,8 +6,8 @@
   ansible.builtin.file:
     path: "{{ toolshed_backup_db_backup_dir }}"
     state: directory
-    owner: "{{ toolshed_backup_db_owner|default(devops_user)|default(ansible_user) }}"
-    group: "{{ toolshed_backup_db_group|default(devops_group)|default(adm) }}"
+    owner: "{{ toolshed_backup_db_owner }}"
+    group: "{{ toolshed_backup_db_group }}"
     mode: 0775
   become: yes
 
@@ -15,8 +15,8 @@
   ansible.builtin.file:
     path: "{{ toolshed_backup_db_backup_dir }}/daily"
     state: directory
-    owner: "{{ toolshed_backup_db_owner|default(devops_user)|default(ansible_user) }}"
-    group: "{{ toolshed_backup_db_group|default(devops_group)|default(adm) }}"
+    owner: "{{ toolshed_backup_db_owner }}"
+    group: "{{ toolshed_backup_db_group }}"
     mode: 0775
   become: yes
   when: toolshed_backup_db_daily > 0
@@ -25,8 +25,8 @@
   ansible.builtin.file:
     path: "{{ toolshed_backup_db_backup_dir }}/weekly"
     state: directory
-    owner: "{{ toolshed_backup_db_owner|default(devops_user)|default(ansible_user) }}"
-    group: "{{ toolshed_backup_db_group|default(devops_group)|default(adm) }}"
+    owner: "{{ toolshed_backup_db_owner }}"
+    group: "{{ toolshed_backup_db_group }}"
     mode: 0775
   become: yes
   when: toolshed_backup_db_weekly > 0
@@ -35,8 +35,8 @@
   ansible.builtin.file:
     path: "{{ toolshed_backup_db_backup_dir }}/monthly"
     state: directory
-    owner: "{{ toolshed_backup_db_owner|default(devops_user)|default(ansible_user) }}"
-    group: "{{ toolshed_backup_db_group|default(devops_group)|default(adm) }}"
+    owner: "{{ toolshed_backup_db_owner }}"
+    group: "{{ toolshed_backup_db_group }}"
     mode: 0775
   become: yes
   when: toolshed_backup_db_monthly > 0
@@ -45,8 +45,8 @@
   ansible.builtin.file:
     path: "{{ toolshed_backup_db_backup_dir }}/yearly"
     state: directory
-    owner: "{{ toolshed_backup_db_owner|default(devops_user)|default(ansible_user) }}"
-    group: "{{ toolshed_backup_db_group|default(devops_group)|default(adm) }}"
+    owner: "{{ toolshed_backup_db_owner }}"
+    group: "{{ toolshed_backup_db_group }}"
     mode: 0775
   become: yes
   when: toolshed_backup_db_yearly > 0
@@ -57,7 +57,7 @@
     src: backupdb.sh.j2
     dest: "{{ toolshed_scripts_dir }}/{{ toolshed_backup_db_script }}.sh"
     owner: "{{ devops_user|default(ansible_user) }}"
-    group: "{{ devops_group|default(adm) }}"
+    group: "{{ devops_group|default('adm') }}"
     mode: 0775
   become: yes
 
