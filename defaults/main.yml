@@ -60,7 +60,7 @@ toolshed_backup_db_schedule_min: 0
 toolshed_backup_db_schedule_month: "*"
 toolshed_backup_db_schedule_day: "*"
 toolshed_backup_db_schedule_days: "*"
-toolshed_backup_db_schedule_user: "root"
+toolshed_backup_db_schedule_user: "{{ devops_user|default(ansible_user) }}"
 
 # Number and type of backup directories to use
 #   If all the values below are zero, unlimited timestamped backups will be

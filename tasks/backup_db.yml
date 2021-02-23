@@ -69,9 +69,9 @@
   ansible.builtin.template:
     src: backupdb.sh.j2
     dest: "{{ toolshed_scripts_dir }}/{{ toolshed_backup_db_script }}.sh"
-    owner: "{{ devops_user|default(ansible_user) }}"
+    owner: "{{ toolshed_backup_db_schedule_user }}"
     group: "{{ devops_group|default('adm') }}"
-    mode: 0775
+    mode: 0770
   become: yes
 
 - name: schedule the Cron task
