@@ -24,6 +24,9 @@ toolshed_backup_db: no
 #   mysql -- MySQL database (currently the only supported option)
 toolshed_backup_db_type: "mysql"
 
+# Database primary host (specify if a cluster and not the primary):
+toolshed_backup_db_primary_host: "{{ ansible_hostname }}"
+
 # Database username
 toolshed_backup_db_user: ""
 

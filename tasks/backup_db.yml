@@ -52,6 +52,19 @@
   when: toolshed_backup_db_yearly > 0
 
 
+- name: create the backup database user
+  community.mysql.mysql_user:
+    name: "{{ toolshed_backup_db_user }}"
+    password: "{{ toolshed_backup_db_password }}"
+    priv: "*.*:SELECT,SHOW DATABASES,LOCK TABLES"
+    host: "localhost"
+    state: present
+    login_unix_socket: "{{ mysql_socket|default('/var/run/mysqld/mysqld.sock') }}"
+  become: yes
+  delegate_to: "{{ toolshed_backup_db_primary_host }}"
+  when: "toolshed_backup_db_type == 'mysql'"
+
+
 - name: create the backup script
   ansible.builtin.template:
     src: backupdb.sh.j2

@@ -42,6 +42,10 @@ Specify the type of database server to be backed up. *(currently only MySQL is s
 
     toolshed_backup_db_type: "mysql"
 
+Primary host (particularly in a replication cluster) to use when creating the backup user in the database. Defaults to the current host but would need to be changes if the current host is a replica and not the primary in a cluster.
+
+    toolshed_backup_db_primary_host: "{{ ansible_hostname }}"
+
 Username used to connect to the database.
 
     toolshed_backup_db_user: ""
