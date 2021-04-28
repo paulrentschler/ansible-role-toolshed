@@ -56,7 +56,7 @@
   community.mysql.mysql_user:
     name: "{{ toolshed_backup_db_user }}"
     password: "{{ toolshed_backup_db_password }}"
-    priv: "*.*:SELECT,SHOW DATABASES,LOCK TABLES"
+    priv: "*.*:SELECT,SHOW DATABASES,LOCK TABLES,PROCESS"
     host: "localhost"
     state: present
     login_unix_socket: "{{ mysql_socket|default('/var/run/mysqld/mysqld.sock') }}"
