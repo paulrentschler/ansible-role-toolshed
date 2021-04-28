@@ -6,6 +6,7 @@
 {% set encrypt = toolshed_backup_db_encryption_key %}
 {% set owner = toolshed_backup_db_owner %}
 {% set group = toolshed_backup_db_group %}
+{% set login_path = toolshed_backup_db_login_path %}
 {% set user = toolshed_backup_db_user %}
 {% set password = toolshed_backup_db_password %}
 {% set include = toolshed_backup_db_include %}
@@ -41,11 +42,15 @@ BACKUP_PATH={{ toolshed_backup_db_backup_dir }}
 {% if group != '' %}
     --group {{ group }} \
 {% endif %}
+{% if login_path != '' %}
+    --login-path {{ login_path }} \
+{% else %}
 {% if user != '' %}
     --user {{ user }} \
 {% endif %}
 {% if password != '' %}
     --password {{ password }} \
+{% endif %}
 {% endif %}
 {% if include != [] %}
 {% for _item in include %}

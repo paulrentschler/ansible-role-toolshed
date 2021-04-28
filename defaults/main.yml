@@ -27,6 +27,10 @@ toolshed_backup_db_type: "mysql"
 # Database primary host (specify if a cluster and not the primary):
 toolshed_backup_db_primary_host: "{{ ansible_hostname }}"
 
+# Database login path
+toolshed_backup_db_login_file: ""
+toolshed_backup_db_login_path: ""
+
 # Database username
 toolshed_backup_db_user: ""
 

@@ -54,6 +54,23 @@ Password used to connect to the database.
 
     toolshed_backup_db_password: ""
 
+MySQL 5.6+ supports the use of the `mysql_config_editor` command ([docs](https://dev.mysql.com/doc/refman/5.6/en/mysql-config-editor.html)) to create a credentials file that does not store passwords in the clear. Use the `mysql_config_editor` command as follows to generate a .mylogin.cnf file:
+
+    > mysql_config_editor set --login-path=<toolshed_backup_db_login_path>
+                              --host=localhost
+                              --user=<toolshed_backup_db_user>
+                              --password
+    Enter password: <enter toolshed_backup_db_password here>
+
+Copy the .mylogin.cnf file into the "files" directory and then specify the filename with the `toolshed_backup_db_login_file` variable.
+
+    toolshed_backup_db_login_file: "../files/mylogin-prod-datareplica.cnf"
+
+You will also need to specify the login path used in the `mysql_config_editor` command above:
+
+    toolshed_backup_db_login_path: ""
+
+
 List of databases and/or tables to include in the backup. If not specified all databases and tables will be backed up unless excluded by `toolshed_backup_db_exclude`.
 
 The format here is: `<database>.<table>`

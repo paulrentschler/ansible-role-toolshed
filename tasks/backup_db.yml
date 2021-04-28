@@ -65,6 +65,15 @@
   when: "toolshed_backup_db_type == 'mysql'"
 
 
+- name: provide the secure login credentials file
+  ansible.builtin.copy:
+    src: "{{ toolshed_backup_db_login_file }}"
+    dest: "~/.mylogin.cnf"
+    owner: "{{ devops_user|default(ansible_user) }}"
+    group: "{{ devops_group|default('adm') }}"
+    mode: 0600
+  when: toolshed_backup_db_login_file is defined and toolshed_backup_db_login_file != ''
+
 - name: create the backup script
   ansible.builtin.template:
     src: backupdb.sh.j2
