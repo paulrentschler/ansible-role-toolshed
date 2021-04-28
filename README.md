@@ -116,6 +116,10 @@ toolshed_backup_db_schedule_days: "*"
 toolshed_backup_db_schedule_user: "root"
 ```
 
+Optionally disable the cron job (i.e., comment it out) by setting this to "no". The default is "yes".
+
+    toolshed_backup_db_schedule_enable: yes
+
 The structure of backup files over time and how many backups are kept are controlled by the settings below. If all values remain zero (0) then an infinite number of backups will be kept in a single directory until the file system is full.
 
 To use a single directory and keep X number of timestamped backups, specify the number for the limit variable:
@@ -181,6 +185,10 @@ toolshed_backup_plone_schedule_day: "*"
 toolshed_backup_plone_schedule_days: "*"
 toolshed_backup_plone_schedule_user: "root"
 ```
+
+Optionally disable the cron job (i.e., comment it out) by setting this to "no". The default is "yes".
+
+    toolshed_backup_plone_schedule_enable: yes
 
 The structure of backup files over time and how many backups are kept are controlled by the settings below. If all values remain zero (0) then an infinite number of backups will be kept in a single directory until the file system is full.
 
