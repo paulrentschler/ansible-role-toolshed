@@ -2,7 +2,7 @@
 # Configure database backups using Bucket from ToolShed
 
 
-- name: create the backup directory
+- name: "Database : create the backup directory"
   ansible.builtin.file:
     path: "{{ toolshed_backup_db_backup_dir }}"
     state: directory
@@ -11,7 +11,7 @@
     mode: 0775
   become: yes
 
-- name: create the daily backup directory
+- name: "Database : create the daily backup directory"
   ansible.builtin.file:
     path: "{{ toolshed_backup_db_backup_dir }}/daily"
     state: directory
@@ -21,7 +21,7 @@
   become: yes
   when: toolshed_backup_db_daily > 0
 
-- name: create the weekly backup directory
+- name: "Database : create the weekly backup directory"
   ansible.builtin.file:
     path: "{{ toolshed_backup_db_backup_dir }}/weekly"
     state: directory
@@ -31,7 +31,7 @@
   become: yes
   when: toolshed_backup_db_weekly > 0
 
-- name: create the monthly backup directory
+- name: "Database : create the monthly backup directory"
   ansible.builtin.file:
     path: "{{ toolshed_backup_db_backup_dir }}/monthly"
     state: directory
@@ -41,7 +41,7 @@
   become: yes
   when: toolshed_backup_db_monthly > 0
 
-- name: create the yearly backup directory
+- name: "Database : create the yearly backup directory"
   ansible.builtin.file:
     path: "{{ toolshed_backup_db_backup_dir }}/yearly"
     state: directory
@@ -52,7 +52,7 @@
   when: toolshed_backup_db_yearly > 0
 
 
-- name: create the backup database user
+- name: "Database : create the backup database user"
   community.mysql.mysql_user:
     name: "{{ toolshed_backup_db_user }}"
     password: "{{ toolshed_backup_db_password }}"
@@ -65,7 +65,7 @@
   when: "toolshed_backup_db_type == 'mysql'"
 
 
-- name: provide the secure login credentials file
+- name: "Database : provide the secure login credentials file"
   ansible.builtin.copy:
     src: "{{ toolshed_backup_db_login_file }}"
     dest: "~/.mylogin.cnf"
@@ -74,7 +74,7 @@
     mode: 0600
   when: toolshed_backup_db_login_file is defined and toolshed_backup_db_login_file != ''
 
-- name: create the backup script
+- name: "Database : create the backup script"
   ansible.builtin.template:
     src: backupdb.sh.j2
     dest: "{{ toolshed_scripts_dir }}/{{ toolshed_backup_db_script }}.sh"
@@ -83,7 +83,7 @@
     mode: 0770
   become: yes
 
-- name: schedule the Cron task
+- name: "Database : schedule the Cron task"
   ansible.builtin.template:
     src: backupdb.cron.j2
     dest: "/etc/cron.d/{{ toolshed_backup_db_script }}"

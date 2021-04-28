@@ -1,7 +1,7 @@
 ---
 # Configure Plone backups using Wheelbarrow from ToolShed
 
-- name: create the backup directory
+- name: "Plone : create the backup directory"
   ansible.builtin.file:
     path: "{{ toolshed_backup_plone_backup_dir }}"
     state: directory
@@ -10,7 +10,7 @@
     mode: 0775
   become: yes
 
-- name: create the daily backup directory
+- name: "Plone : create the daily backup directory"
   ansible.builtin.file:
     path: "{{ toolshed_backup_plone_backup_dir }}/daily"
     state: directory
@@ -20,7 +20,7 @@
   become: yes
   when: toolshed_backup_plone_daily > 0
 
-- name: create the weekly backup directory
+- name: "Plone : create the weekly backup directory"
   ansible.builtin.file:
     path: "{{ toolshed_backup_plone_backup_dir }}/weekly"
     state: directory
@@ -30,7 +30,7 @@
   become: yes
   when: toolshed_backup_plone_weekly > 0
 
-- name: create the monthly backup directory
+- name: "Plone : create the monthly backup directory"
   ansible.builtin.file:
     path: "{{ toolshed_backup_plone_backup_dir }}/monthly"
     state: directory
@@ -40,7 +40,7 @@
   become: yes
   when: toolshed_backup_plone_monthly > 0
 
-- name: create the yearly backup directory
+- name: "Plone : create the yearly backup directory"
   ansible.builtin.file:
     path: "{{ toolshed_backup_plone_backup_dir }}/yearly"
     state: directory
@@ -51,7 +51,7 @@
   when: toolshed_backup_plone_yearly > 0
 
 
-- name: create the backup script
+- name: "Plone : create the backup script"
   ansible.builtin.template:
     src: backupplone.sh.j2
     dest: "{{ toolshed_scripts_dir }}/{{ toolshed_backup_plone_script }}.sh"
@@ -60,7 +60,7 @@
     mode: 0775
   become: yes
 
-- name: schedule the Cron task
+- name: "Plone : schedule the Cron task"
   ansible.builtin.template:
     src: backupplone.cron.j2
     dest: "/etc/cron.d/{{ toolshed_backup_plone_script }}"
