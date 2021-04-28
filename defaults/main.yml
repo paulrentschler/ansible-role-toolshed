@@ -59,6 +59,7 @@ toolshed_backup_db_group: "{{ devops_group|default('adm') }}"
 
 # When to run the backup (Cron settings)
 toolshed_backup_db_schedule_mailto: "root"
+toolshed_backup_db_schedule_enable: yes
 toolshed_backup_db_schedule_hour: 5
 toolshed_backup_db_schedule_min: 0
 toolshed_backup_db_schedule_month: "*"
@@ -112,6 +113,7 @@ toolshed_backup_plone_pack_days: 0
 
 # When to run the backup (Cron settings)
 toolshed_backup_plone_schedule_mailto: "root"
+toolshed_backup_plone_schedule_enable: yes
 toolshed_backup_plone_schedule_hour: 5
 toolshed_backup_plone_schedule_min: 0
 toolshed_backup_plone_schedule_month: "*"

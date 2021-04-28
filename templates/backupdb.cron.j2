@@ -15,6 +15,11 @@ MAILTO={{ toolshed_backup_db_schedule_mailto }}
 {% set mon = toolshed_backup_db_schedule_month %}
 {% set days = toolshed_backup_db_schedule_days %}
 {% set user = toolshed_backup_db_schedule_user %}
+{% if toolshed_backup_db_schedule_enable|default('yes')|bool %}
+{% set enable = "" %}
+{% else %}
+{% set enable = "#" %}
+{% endif %}
 
 # Example of job definition:
 # .----------------- minute (0 - 59)
@@ -25,5 +30,5 @@ MAILTO={{ toolshed_backup_db_schedule_mailto }}
 # |   |  |  |  |
 # *   *  *  *  *  username    command to be executed
 
- {{min}}  {{hr}}  {{day}}  {{mon}}  {{days}}  {{user}}    {{ toolshed_scripts_dir }}/{{ toolshed_backup_db_script }}.sh
+{{ enable }} {{min}}  {{hr}}  {{day}}  {{mon}}  {{days}}  {{user}}    {{ toolshed_scripts_dir }}/{{ toolshed_backup_db_script }}.sh
 
