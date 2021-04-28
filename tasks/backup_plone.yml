@@ -68,4 +68,8 @@
     group: root
     mode: 0644
   become: yes
+  tags:
+    - toolshed_plone_cron
+    - toolshed_cron
+    - cron
 

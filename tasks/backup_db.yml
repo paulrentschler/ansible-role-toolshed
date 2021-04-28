@@ -91,4 +91,8 @@
     group: root
     mode: 0644
   become: yes
+  tags:
+    - toolshed_db_cron
+    - toolshed_cron
+    - cron
 

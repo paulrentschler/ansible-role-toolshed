@@ -29,7 +29,10 @@
 - name: configure database backups
   include_tasks: backup_db.yml
   when: toolshed_backup_db|bool
+  tags: always
 
 - name: configure Plone backups
   include_tasks: backup_plone.yml
   when: toolshed_backup_plone|bool
+  tags: always
+
