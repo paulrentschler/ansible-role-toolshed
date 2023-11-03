@@ -96,3 +96,7 @@
     - toolshed_cron
     - cron
 
+- name: "Database : encryption setup"
+  ansible.builtin.debug:
+    msg: "TODO: manually install the GPG key associated with {{ toolshed_backup_db_encryption_key }} so backups can be encrypted. Instructions for doing this are in this role's README."
+  when: toolshed_backup_db_encryption_key is defined and toolshed_backup_db_encryption_key != ''

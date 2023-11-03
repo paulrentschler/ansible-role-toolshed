@@ -141,6 +141,31 @@ An example of keeping 2 weeks (14 days) of daily backups, 6 weeks of weekly back
     toolshed_backup_db_yearly: 2
 
 
+#### GPG Encryption
+
+While backups can be setup to be encrypted with a GPG key, this role **does not** install the GPG key that is specified. Setting up the GPG key must be done **manually** as follows:
+
+Export the public key to use to encrypt the backups:
+
+    > gpg --list-keys
+    > gpg --export <key id> > public.key
+
+Copy the `public.key` file to the server that will be doing the backups.
+
+Install the public key on the server doing the backups:
+
+    > gpg --import public.key
+    > gpg --list-keys
+    > gpg --edit-key <key id> trust quit
+
+    Enter 5 to trust ultimately
+
+    Enter Y to confirm
+
+The public key is now installed and trusted to be used to encrypt the database backups.
+
+
+
 ### Plone backups
 
 Change to `yes` in order to cause Plone installation to be backed up.
