@@ -11,6 +11,6 @@ BACKUP_PATH={{ toolshed_pruning_dir }}
 /usr/bin/python3 {{ toolshed_install_dir }}/toolshed/shears.py \
     $BACKUP_PATH \
     {{ toolshed_pruning_file_extensions }} \
+    {% if toolshed_pruning_folders %}--folders \{% endif %}
     --limit {{ toolshed_pruning_limit }}
-    {% if toolshed_pruning_folders %}--folders{% endif %}
 {% endif %}
