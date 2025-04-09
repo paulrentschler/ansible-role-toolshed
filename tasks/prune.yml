@@ -1,0 +1,25 @@
+---
+# Configure file pruning using Shears from ToolShed
+
+
+- name: "Pruning : create the pruning script"
+  ansible.builtin.template:
+    src: pruning.sh.j2
+    dest: "{{ toolshed_scripts_dir }}/{{ toolshed_pruning_script }}.sh"
+    owner: "{{ toolshed_pruning_schedule_user }}"
+    group: "{{ devops_group|default('adm') }}"
+    mode: 0770
+  become: yes
+
+- name: "Pruning : schedule the Cron task"
+  ansible.builtin.template:
+    src: pruning.cron.j2
+    dest: "/etc/cron.d/{{ toolshed_pruning_script }}"
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  tags:
+    - toolshed_db_cron
+    - toolshed_cron
+    - cron

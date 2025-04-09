@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#
+# {{ ansible_managed }}
+#
+
+BACKUP_PATH={{ toolshed_pruning_dir }}
+
+{% if toolshed_pruning_limit > 0 %}
+# prune the backup files
+/usr/bin/python3 {{ toolshed_install_dir }}/toolshed/shears.py \
+    $BACKUP_PATH \
+    {{ toolshed_pruning_file_extensions }} \
+    --limit {{ toolshed_pruning_limit }}
+    {% if toolshed_pruning_folders %}--folders{% endif %}
+{% endif %}

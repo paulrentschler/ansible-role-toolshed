@@ -136,3 +136,37 @@ toolshed_backup_plone_weekly: 0
 toolshed_backup_plone_monthly: 0
 toolshed_backup_plone_yearly: 0
 
+
+
+##
+# File pruning
+##
+
+# Prunes files or folders when "yes"
+toolshed_prune: no
+
+# Name of the script that will run the backup (NO extension)
+toolshed_pruning_script: "prune"
+
+# Path to the directory that holds the files/folders to be pruned
+toolshed_pruning_dir: /backups
+
+# Space-delimited list of file extensions to be pruned
+#   "use '' for no extension"
+toolshed_pruning_file_extensions: "''"
+
+# When to run the backup (Cron settings)
+toolshed_pruning_schedule_mailto: "root"
+toolshed_pruning_schedule_enable: yes
+toolshed_pruning_schedule_hour: 5
+toolshed_pruning_schedule_min: 0
+toolshed_pruning_schedule_month: "*"
+toolshed_pruning_schedule_day: "*"
+toolshed_pruning_schedule_days: "*"
+toolshed_pruning_schedule_user: "root"
+
+# Number of timestamped files/folders to keep in a single directory
+toolshed_pruning_limit: 0
+
+# Prune folders instead of files
+toolshed_pruning_folders: False

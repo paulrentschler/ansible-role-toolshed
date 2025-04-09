@@ -36,3 +36,7 @@
   when: toolshed_backup_plone|bool
   tags: always
 
+- name: File pruning
+  include_tasks: prune.yml
+  when: toolshed_prune|bool
+  tags: always
