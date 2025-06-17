@@ -15,7 +15,7 @@
 {% if encrypt %}
   {% set extensions = 'bak' %}
 {% else %}
-  {% set extensions = 'gz' %}
+  {% set extensions = 'tar.gz' %}
 {% endif %}
 {% set pruning = no %}
 {% if toolshed_backup_db_daily > 0 %}
